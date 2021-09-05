@@ -1,0 +1,126 @@
+// import React, { useContext, useMemo } from 'react';
+// // import styledError from '../utils/error';
+// // import isFunction from '../utils/isFunction';
+
+// export type Theme = {
+//   [key: string]: any;
+// };
+
+// type ThemeFn = (outerTheme?: Theme) => Theme;
+// export type ThemeArgument = Theme | ThemeFn;
+
+// type Props = {
+//   children?: React.ReactChild;
+//   theme: ThemeArgument;
+// };
+
+// export const ThemeContext = React.createContext<Theme | undefined>(undefined);
+
+// export const ThemeConsumer = ThemeContext.Consumer;
+
+// function mergeTheme(theme: ThemeArgument, outerTheme?: Theme): Theme {
+//   if (!theme) {
+//     console.log('no theme');
+//   }
+
+//   if (typeof theme === 'function') {
+//     const themeFn = theme as ThemeFn;
+//     const mergedTheme = themeFn(outerTheme);
+
+//     if (
+//       process.env.NODE_ENV !== 'production' &&
+//       (mergedTheme === null || Array.isArray(mergedTheme) || typeof mergedTheme !== 'object')
+//     ) {
+//       // throw styledError(7);
+//       console.log('mergedTheme error');
+//     }
+
+//     return mergedTheme;
+//   }
+
+//   if (Array.isArray(theme) || typeof theme !== 'object') {
+//     console.log("theme !== 'object'");
+//   }
+
+//   return outerTheme ? { ...outerTheme, ...theme } : theme;
+// }
+
+// /**
+//  * Provide a theme to an entire react component tree via context
+//  */
+// export default function ThemeProvider(props: Props): JSX.Element | null {
+//   const outerTheme = useContext(ThemeContext);
+//   const themeContext = useMemo(
+//     () => mergeTheme(props.theme, outerTheme),
+//     [props.theme, outerTheme],
+//   );
+
+//   if (!props.children) {
+//     return null;
+//   }
+
+//   return <ThemeContext.Provider value={themeContext}>{props.children}</ThemeContext.Provider>;
+// }
+
+import React, { useContext, useMemo } from 'react';
+// import styledError from '../utils/error';
+// import isFunction from '../utils/isFunction';
+
+export type Theme = {
+  [key: string]: any;
+};
+
+type ThemeFn = (outerTheme?: Theme) => Theme;
+type ThemeArgument = Theme | ThemeFn;
+
+type Props = {
+  children?: React.ReactChild;
+  theme: ThemeArgument;
+};
+
+export const ThemeContext = React.createContext<Theme | undefined>(undefined);
+
+export const ThemeConsumer = ThemeContext.Consumer;
+
+function mergeTheme(theme: ThemeArgument, outerTheme?: Theme): Theme {
+  if (!theme) {
+    console.log('no theme');
+  }
+
+  if (typeof theme === 'function') {
+    const themeFn = theme as ThemeFn;
+    const mergedTheme = themeFn(outerTheme);
+
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      (mergedTheme === null || Array.isArray(mergedTheme) || typeof mergedTheme !== 'object')
+    ) {
+      console.log('no theme');
+    }
+
+    return mergedTheme;
+  }
+
+  if (Array.isArray(theme) || typeof theme !== 'object') {
+    console.log('no theme');
+  }
+
+  return outerTheme ? { ...outerTheme, ...theme } : theme;
+}
+
+/**
+ * Provide a theme to an entire react component tree via context
+ */
+export default function ThemeProvider(props: Props): JSX.Element | null {
+  const outerTheme = useContext(ThemeContext);
+  const themeContext = useMemo(
+    () => mergeTheme(props.theme, outerTheme),
+    [props.theme, outerTheme],
+  );
+
+  if (!props.children) {
+    return null;
+  }
+
+  return <ThemeContext.Provider value={themeContext}>{props.children}</ThemeContext.Provider>;
+}
