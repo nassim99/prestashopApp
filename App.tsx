@@ -2,7 +2,6 @@ import ThemeProvider from './src/helpers/theme-provider';
 import useTheme from './src/hooks/useTheme';
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-
 const App = () => {
   // const isDarkMode = useColorScheme() === 'dark';
 
