@@ -1,3 +1,4 @@
+// https://create-react-app.dev/docs/importing-a-component/#absolute-imports
 {
   "compilerOptions": {
     /* Basic Options */
@@ -36,7 +37,7 @@
     /* Module Resolution Options */
     "moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
     "resolveJsonModule": true,
-    "baseUrl": "./src" /* Base directory to resolve non-absolute module names. */,
+    "baseUrl": "./src" /* Base directory to resolve non-absolute module names. */, // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     "paths": {
       "@assets": ["src/assets/*"],
       "@components": ["src/components/*"],
@@ -50,7 +51,6 @@
       "@hooks": ["src/hooks/*"],
       "@utils": ["src/utils/*"]
     } /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */,
-    // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     "typeRoots": [
       "src/@types",
       "./node_modules/@types"
