@@ -1,27 +1,16 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+import { NavigationFunctionComponent } from 'react-native-navigation';
+import { navigate } from 'utils/navigate';
 
-const Home: React.FC = (props: any) => {
+const Home: NavigationFunctionComponent = ({ componentId }: any) => {
+  const handleNavigateProfile = () => {
+    navigate({ screen: 'Profile', componentId, screenTitle: 'Profile' });
+  };
+
   return (
     <View>
-      <Text
-        onPress={() =>
-          Navigation.push(props.componentId, {
-            component: {
-              name: 'Profile',
-              options: {
-                topBar: {
-                  title: {
-                    text: 'Profile',
-                  },
-                },
-              },
-            },
-          })
-        }>
-        Home screen
-      </Text>
+      <Text onPress={handleNavigateProfile}>Home screen</Text>
     </View>
   );
 };
